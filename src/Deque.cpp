@@ -116,4 +116,32 @@ void Deque::print() {
 }
 
 
-void Deque::resize() {}
+void Deque::resize() {
+  std::size_t newCapacity = _capacity * 2;
+  int* newArray = new int[newCapacity];
+
+  if(_front <= _back)
+  {
+    for(int i = 0; i < _size; ++i)
+    {
+      newArray[i] = _arr[_front + i]; 
+    }
+  } else 
+  {
+    for(int i = 0; i < _capacity - _front; ++i)
+    {
+      newArray[i] = _arr[_front + i];
+    }
+
+    for(int i = 0; i <= _back; ++i)
+    {
+      newArray[_capacity - _front + i] = _arr[i];
+    }
+  }
+
+  _front = 0;
+  _back = _size - 1;
+  _capacity = newCapacity;
+  delete [] _arr;
+  _arr = newArray;
+}
